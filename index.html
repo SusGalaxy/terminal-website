@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Simulated Terminal</title>
+    <style>
+      body {
+        background-color: black;
+        color: white;
+        font-family: monospace;
+      }
+      #terminal {
+        border: 1px solid white;
+        padding: 10px;
+        height: 400px;
+        overflow-y: scroll;
+      }
+      #input {
+        color: white;
+        background-color: black;
+        border: none;
+        outline: none;
+        width: 90%;
+        font-size: 1.2em;
+      }
+      #prompt {
+        color: green;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="terminal">
+      <p>Welcome to the simulated terminal.</p>
+      <p>Type "help" to see a list of available commands.</p>
+    </div>
+    <div>
+      <span id="prompt">$</span>
+      <input type="text" id="input" autofocus>
+    </div>
+    <script>
+      const terminal = document.getElementById("terminal");
+      const input = document.getElementById("input");
+      const prompt = document.getElementById("prompt");
+
+      input.addEventListener("keyup", function(event) {
+        if (event.keyCode === 13) {
+          const command = input.value;
+          input.value = "";
+          terminal.innerHTML += `<p>${prompt.textContent} ${command}</p>`;
+          if (command === "help") {
+            terminal.innerHTML += "<p>Available commands: help, clear.</p>";
+          } else if (command === "clear") {
+            terminal.innerHTML = "";
+          } else {
+            terminal.innerHTML += `<p>"${command}" is not a recognized command.</p>`;
+          }
+          terminal.scrollTop = terminal.scrollHeight;
+        }
+      });
+    </script>
+  </body>
+</html>
